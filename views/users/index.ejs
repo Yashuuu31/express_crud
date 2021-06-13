@@ -1,0 +1,55 @@
+<html>
+<head>
+    <title>Document</title>
+</head>
+<%- include('../layouts/style') -%> 
+<body>
+    <%- include('../layouts/navbar') -%> 
+    <div class="container">
+        <div class="card mt-5">
+            <div class="card-header">
+                <div class="row">
+                    <h3 class="card-title col">Users</h3>
+                    <a href="users/create" class="btn btn-primary col-1">Add</a>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>SrNo.</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Age</th>
+                            <th>Action</th>
+                        </tr>
+                        <% users.forEach((item, i) => { %>
+                            <tr>
+                                <th><%= i+1 %></th>
+                                <th><%= item.name %></th>
+                                <th><%= item.email %></th>
+                                <th><%= item.age %></th>
+                                <th>
+                                    <a href="/users/edit/<%= item._id %> " class="btn btn-warning btn-sm">Edit</a>
+                                    <a href="/users/delete/<%= item._id %> " class="btn btn-danger btn-sm deleteBtn">Delete</a>
+                                </th>
+                            </tr>
+                        <% }) %>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<%- include('../layouts/script') -%> 
+<script>
+    $(document).ready(function(){
+        $(document).on('click', '.deleteBtn', function(e){
+            e.preventDefault();
+            let deleteUrl = $(this).attr('href');
+            let result = confirm('Are You Sure Delete This ?');
+            if(result){
+                location.replace(deleteUrl);
+            }
+        })
+    })
+</script>
+</html>
